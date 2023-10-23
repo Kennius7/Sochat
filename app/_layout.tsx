@@ -4,6 +4,18 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+import { HomeHeader } from '../components/headers/HomeHeader';
+import { ChatRoomHeader } from '../components/headers/ChatRoomHeader';
+// import { Amplify } from "aws-amplify";
+// import { withAuthenticator } from "@aws-amplify/ui-react-native";
+// import awsExports from "../src/aws-exports";
+import React from 'react';
+
+
+
+
+// Amplify.configure(awsExports);
+
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -12,13 +24,14 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: 'HomeScreen',
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+
+function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
@@ -48,9 +61,20 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen 
+          name="HomeScreen" 
+          options={{ headerTitle: HomeHeader }} 
+        />
+        <Stack.Screen 
+          name="ChatRoomScreen" 
+          options={{ headerTitle: ChatRoomHeader, headerBackVisible: false }}  
+        />
       </Stack>
     </ThemeProvider>
   );
 }
+
+
+
+
+export default RootLayout;
